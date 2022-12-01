@@ -9,7 +9,7 @@ public class LinearProgram {
 	int numberVariables;
 	int numberConstrains;
 	private double v;
-	private double[] c; 
+	private double[] c;
 	private double[][] A;
 	private double[] b;
 	private List<Integer> nonBasicValues;
@@ -54,15 +54,15 @@ public class LinearProgram {
 	}
 
 	public Optional<Integer> determineLeavingVariable(int pEnteringVariable) {
-		int enteringVariableIndex =  getNonBasicVariablesIndex(pEnteringVariable);
+		int enteringVariableIndex = getNonBasicVariablesIndex(pEnteringVariable);
 
 		double min = Double.MAX_VALUE;
 		Integer leavingVariable = null;
 		for (int constrainIndex = 0; constrainIndex < numberConstrains; constrainIndex++) {
-			double coefficient = A[constrainIndex][enteringVariableIndex]; 
+			double coefficient = A[constrainIndex][enteringVariableIndex];
 			if (coefficient < 0) {
 				double value = b[constrainIndex] / (-coefficient);
-				if (min > value) { 
+				if (min > value) {
 					min = value;
 					leavingVariable = constrainIndex;
 				}
@@ -116,8 +116,8 @@ public class LinearProgram {
 
 		double a_l_e = A[oldLeavingIndex][oldEnteringIndex];
 		newB[newEnteringIndex] = b[oldLeavingIndex] / -a_l_e;
-		for (int index = 0; index < numberConstrains; index++) {
-			if (index != newLeavingIndex) {
+		for (int index = 0; index < numberVariables; index++) {
+			if (index != newLeavingIndex) { 
 				newA[newEnteringIndex][index] = A[oldLeavingIndex][index] / -a_l_e;
 			}
 		}
@@ -146,6 +146,17 @@ public class LinearProgram {
 		b = newB;
 		nonBasicValues.set(oldEnteringIndex, pLeavingVariable);
 		basicValues.set(oldLeavingIndex, pEnteringVariable);
+	}
 
+	public double[] getResult() {
+		double[] result = new double[numberVariables];
+		for (int variableNumber = 0; variableNumber < numberVariables; ++variableNumber) {
+			if (basicValues.contains(variableNumber)) { 
+				result[variableNumber] = b[getBasicVariablesIndex(variableNumber)]; 
+			} else {
+				result[variableNumber] = 0; 
+			}
+		}
+		return result;
 	}
 }

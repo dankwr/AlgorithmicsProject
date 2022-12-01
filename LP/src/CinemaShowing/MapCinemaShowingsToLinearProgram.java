@@ -9,11 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import SimplexAlgorithm.LinearProgram;
-
 public class MapCinemaShowingsToLinearProgram {
 
-	public static LinearProgram convert(List<CinemaShowing> pList) {
+	public static CinemaShowingLinearProgram convert(List<CinemaShowing> pList) {
 		int variableNumber = 0;
 		final List<LinearProgramVariable> variables = new ArrayList<>(pList.size());
 		for (CinemaShowing cinemaShowing : pList) {
@@ -35,12 +33,12 @@ public class MapCinemaShowingsToLinearProgram {
 					overlappingConstraints.add(new OverlappingConstraint(variable, secondVariable));
 				}
 			}
-		}
+		} 
 
 		return createLinearProgramm(variables, titleConstraints.values(), overlappingConstraints);
 	}
 
-	private static LinearProgram createLinearProgramm(List<LinearProgramVariable> variables,
+	private static CinemaShowingLinearProgram createLinearProgramm(List<LinearProgramVariable> variables,
 			Collection<TitleConstraint> titleConstraints, List<OverlappingConstraint> overlappingConstraints) {
 		int numberVariables = variables.size();
 		int numberConstrains = titleConstraints.size() + overlappingConstraints.size();
@@ -64,10 +62,11 @@ public class MapCinemaShowingsToLinearProgram {
 			}
 			++constraintNumber;
 		}
-		
+
 		for (OverlappingConstraint constraint : overlappingConstraints) {
 			b[constraintNumber] = 1;
-			List<Integer> variablesInConstraint = Arrays.asList(constraint.getFirstVariable().getIndex(), constraint.getSecondVariable().getIndex()); 
+			List<Integer> variablesInConstraint = Arrays.asList(constraint.getFirstVariable().getIndex(),
+					constraint.getSecondVariable().getIndex());
 			for (int index = 0; index < numberVariables; ++index) {
 				if (variablesInConstraint.contains(index)) {
 					A[constraintNumber][index] = -1;
@@ -78,7 +77,8 @@ public class MapCinemaShowingsToLinearProgram {
 			++constraintNumber;
 		}
 
-		return new LinearProgram(numberVariables, numberConstrains, c, A, b);
+		return new CinemaShowingLinearProgram(variables, titleConstraints, overlappingConstraints, numberVariables,
+				numberConstrains, c, A, b);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import CinemaShowing.CinemaShowing;
+import CinemaShowing.CinemaShowingLinearProgram;
 import CinemaShowing.MapCinemaShowingsToLinearProgram;
 import CsvImporter.MapCsvToCinemaShowing;
 import SimplexAlgorithm.ChoosingStrategy;
@@ -23,7 +24,7 @@ public class ScheduleCinemaShowing {
 
 		try {
 			List<CinemaShowing> cinemaShowings = MapCsvToCinemaShowing.convertCsvFile(filepath);
-			LinearProgram linearProgram = MapCinemaShowingsToLinearProgram.convert(cinemaShowings);
+			CinemaShowingLinearProgram linearProgram = MapCinemaShowingsToLinearProgram.convert(cinemaShowings);
 			LinearProgrammResult result = Simplex.doSimplex(linearProgram, Simplex.BLAND_RULE);
 			if (result != LinearProgrammResult.FEASIBLE) {
 				System.out.println("Result: " + result);
@@ -37,8 +38,8 @@ public class ScheduleCinemaShowing {
 		System.out.println("Done!");
 	}
 
-	private static void printResult(LinearProgram linearProgram) {
-		// TODO Auto-generated method stub
-		
+	private static void printResult(CinemaShowingLinearProgram linearProgram) {
+		linearProgram.printSchedulePlan();
+
 	}
 }

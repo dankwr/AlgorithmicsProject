@@ -19,14 +19,19 @@ public class MapCsvToCinemaShowing {
 	}
 
 	private static CinemaShowing mapLineToCinemaShowing(String pLine) {
-		String[] splittedLine = pLine.split("[,;]");
+		String[] splittedLine = pLine.split("[;]");
 		assert splittedLine.length == 5;
-		Weekday wd = Weekday.getWeekday(splittedLine[0]);
+		Weekday wd; 
+		try {
+			wd = Weekday.getWeekday(splittedLine[0]);
+		} catch (IllegalStateException e) {
+			throw new IllegalStateException("Exception in Line '" + pLine + "'", e);
+		}
 		int starttime = calculateStarttime(splittedLine[1]);
-		int duration = Integer.parseInt(splittedLine[2]); 
+		int duration = Integer.parseInt(splittedLine[2]);
 		String title = splittedLine[3];
 		double score = Double.parseDouble(splittedLine[4]);
-		return new CinemaShowing(wd, starttime, duration, title, score);
+		return new CinemaShowing(pLine, wd, starttime, duration, title, score);
 	}
 
 	private static int calculateStarttime(String pTimeString) {
