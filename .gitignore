@@ -21,3 +21,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/.metadata/
+
+/LP/.classpath
+/LP/.project
+/LP/.settings/org.eclipse.jdt.core.prefs
