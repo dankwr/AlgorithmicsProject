@@ -5,7 +5,7 @@ import java.util.Optional;
 public class Simplex {
 
 	public enum LinearProgrammResult {
-		INFEASIBLE, UNBOUNDED, RESULT;
+		INFEASIBLE, UNBOUNDED, FEASIBLE;
 	}
 
 	public LinearProgrammResult doSimplex(LinearProgram pLP, ChoosingStrategy pChoosingStrategy) {
@@ -18,7 +18,8 @@ public class Simplex {
 
 	private LinearProgrammResult initializeLinearProgram(LinearProgram pLP, ChoosingStrategy pChoosingStrategy) {
 		
-		return null;
+		// Die Constrains aus dem ScheduleProblem sind alle in der korrekten Slack-Form, deswegen ist hier nicht mehr notwendig.
+		return LinearProgrammResult.FEASIBLE; 
 	}
 
 	private LinearProgrammResult doSimplexLoop(LinearProgram pLP, ChoosingStrategy pChoosingStrategy) {
@@ -32,7 +33,7 @@ public class Simplex {
 				return LinearProgrammResult.UNBOUNDED;
 			}
 		}
-		return LinearProgrammResult.RESULT;
+		return LinearProgrammResult.FEASIBLE;
 	}
 
 }

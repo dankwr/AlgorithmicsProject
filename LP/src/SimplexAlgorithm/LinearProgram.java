@@ -9,19 +9,27 @@ public class LinearProgram {
 	int numberVariables;
 	int numberConstrains;
 	private double v;
-	private double[] c;
+	private double[] c; 
 	private double[][] A;
 	private double[] b;
 	private List<Integer> nonBasicValues;
 	private List<Integer> basicValues;
 
 	public LinearProgram(int pNumberVariables, int pNumberConstrains) {
+		this(pNumberVariables, pNumberConstrains, new double[pNumberVariables],
+				new double[pNumberVariables][pNumberConstrains], new double[pNumberConstrains]);
+	}
+
+	public LinearProgram(int pNumberVariables, int pNumberConstrains, double[] pC, double[][] pA, double[] pB) {
+		assert pC.length == pNumberVariables;
+		assert pB.length == pNumberConstrains;
+		assert pA.length == pNumberVariables && pA[0].length == pNumberConstrains;
 		numberVariables = pNumberVariables;
 		numberConstrains = pNumberConstrains;
 		v = 0;
-		c = new double[pNumberVariables];
-		A = new double[pNumberVariables][pNumberConstrains];
-		b = new double[pNumberConstrains];
+		c = pC;
+		A = pA;
+		b = pB;
 		nonBasicValues = new ArrayList<>();
 		basicValues = new ArrayList<>();
 		for (int index = 0; index < pNumberVariables; ++index) {
@@ -31,10 +39,10 @@ public class LinearProgram {
 			basicValues.add(index);
 		}
 	}
-	
+
 	public double[] getC() {
 		return c;
-	} 
+	}
 
 	public boolean hasAnyPositiveC() {
 		for (double d : c) {
@@ -115,19 +123,20 @@ public class LinearProgram {
 		}
 		newA[newEnteringIndex][newLeavingIndex] = 1 / a_l_e;
 		for (int index = 0; index < numberConstrains; index++) {
-			if(index == oldLeavingIndex)
+			if (index == oldLeavingIndex)
 				continue;
 			newB[index] = b[index] + A[index][oldEnteringIndex] * newB[newEnteringIndex];
 			for (int secondIndex = 0; secondIndex < numberVariables; ++secondIndex) {
-				if(secondIndex == oldEnteringIndex)
+				if (secondIndex == oldEnteringIndex)
 					continue;
-				newA[index][secondIndex] = A[index][secondIndex] + A[index][oldEnteringIndex] * newA[newEnteringIndex][secondIndex];
+				newA[index][secondIndex] = A[index][secondIndex]
+						+ A[index][oldEnteringIndex] * newA[newEnteringIndex][secondIndex];
 			}
 			newA[index][newLeavingIndex] = -A[index][oldEnteringIndex] * newA[newEnteringIndex][newLeavingIndex];
 		}
 		v = v * c[oldEnteringIndex] * newB[newEnteringIndex];
 		for (int index = 0; index < numberVariables; ++index) {
-			if(index == oldEnteringIndex)
+			if (index == oldEnteringIndex)
 				continue;
 			newC[index] = c[index] + c[oldEnteringIndex] * newA[newEnteringIndex][index];
 		}
@@ -135,9 +144,8 @@ public class LinearProgram {
 		c = newC;
 		A = newA;
 		b = newB;
-		nonBasicValues.set(oldEnteringIndex, pLeavingVariable); 
+		nonBasicValues.set(oldEnteringIndex, pLeavingVariable);
 		basicValues.set(oldLeavingIndex, pEnteringVariable);
-		
-	}
 
+	}
 }

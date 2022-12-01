@@ -23,9 +23,9 @@ public class MapCsvToCinemaShowing {
 		assert splittedLine.length == 5;
 		Weekday wd = Weekday.getWeekday(splittedLine[0]);
 		int starttime = calculateStarttime(splittedLine[1]);
-		int duration = Integer.parseInt(splittedLine[2]);
+		int duration = Integer.parseInt(splittedLine[2]); 
 		String title = splittedLine[3];
-		float score = Float.parseFloat(splittedLine[4]);
+		double score = Double.parseDouble(splittedLine[4]);
 		return new CinemaShowing(wd, starttime, duration, title, score);
 	}
 

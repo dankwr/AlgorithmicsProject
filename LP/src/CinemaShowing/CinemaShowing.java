@@ -6,9 +6,9 @@ public class CinemaShowing {
 	private final int starttime;
 	private final int endtime;
 	private final String title;
-	private final float score;
+	private final double score;
 
-	public CinemaShowing(Weekday pWeekday, int pStarttime, int pDuration, String pTitle, float pScore) {
+	public CinemaShowing(Weekday pWeekday, int pStarttime, int pDuration, String pTitle, double pScore) {
 		weekday = pWeekday;
 		starttime = pStarttime;
 		endtime = pStarttime + pDuration;
@@ -32,7 +32,7 @@ public class CinemaShowing {
 		return title;
 	}
 	
-	public float getScore() {
+	public double getScore() {
 		return score; 
 	}
 
