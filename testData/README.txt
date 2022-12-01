@@ -1,0 +1,13 @@
+NFL17_014_IMDb_ge_8.csv 41.1 in 0.1 sec
+NFL17_017_Retrospektive.csv 97.5 in 0.08 sec
+NFL17_021_Mi.csv 30.1 in 0.11 sec
+NFL17_024_Kinder.csv 89.9 in 0.09 sec
+NFL17_029_SE_Vuxna.csv 93.5 in 0.11 sec
+NFL18_014_IMDb_ge_8_5.csv 44.2 in 0.11 sec
+NFL18_015_kurz.csv 72.1 in 0.09 sec
+NFL18_015_kurz_rnd_rate.csv 74.0 in 0.08 sec
+NFL18_023_Di.csv 37.8 in 0.13 sec
+NFL18_023_Di_Nacht.csv 10007.7 in 0.11 sec
+NFL18_027_IMDb_ge_8.csv 85.1 in 0.1 sec
+NFL19_012_Kurz.csv 75.3 in 0.09 sec
+NFL19_029_KoKi.csv 155.9 in 0.09 sec
