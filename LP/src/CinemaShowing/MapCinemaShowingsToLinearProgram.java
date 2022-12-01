@@ -48,7 +48,7 @@ public class MapCinemaShowingsToLinearProgram {
 		for (LinearProgramVariable variable : variables) {
 			c[variable.getIndex()] = variable.getCinemaShowing().getScore();
 		}
-		double[][] A = new double[numberVariables][numberConstrains];
+		double[][] A = new double[numberConstrains][numberVariables];
 		double[] b = new double[numberConstrains];
 		int constraintNumber = 0;
 		for (TitleConstraint constraint : titleConstraints) {
@@ -57,9 +57,9 @@ public class MapCinemaShowingsToLinearProgram {
 					.collect(Collectors.toSet());
 			for (int index = 0; index < numberVariables; ++index) {
 				if (variablesInConstraint.contains(index)) {
-					A[index][constraintNumber] = -1;
+					A[constraintNumber][index] = -1;
 				} else {
-					A[index][constraintNumber] = 0;
+					A[constraintNumber][index] = 0;
 				}
 			}
 			++constraintNumber;
@@ -70,9 +70,9 @@ public class MapCinemaShowingsToLinearProgram {
 			List<Integer> variablesInConstraint = Arrays.asList(constraint.getFirstVariable().getIndex(), constraint.getSecondVariable().getIndex()); 
 			for (int index = 0; index < numberVariables; ++index) {
 				if (variablesInConstraint.contains(index)) {
-					A[index][constraintNumber] = -1;
+					A[constraintNumber][index] = -1;
 				} else {
-					A[index][constraintNumber] = 0;
+					A[constraintNumber][index] = 0;
 				}
 			}
 			++constraintNumber;

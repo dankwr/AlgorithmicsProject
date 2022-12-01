@@ -23,7 +23,7 @@ public class LinearProgram {
 	public LinearProgram(int pNumberVariables, int pNumberConstrains, double[] pC, double[][] pA, double[] pB) {
 		assert pC.length == pNumberVariables;
 		assert pB.length == pNumberConstrains;
-		assert pA.length == pNumberVariables && pA[0].length == pNumberConstrains;
+		assert pA.length == pNumberConstrains && pA[0].length == pNumberVariables;
 		numberVariables = pNumberVariables;
 		numberConstrains = pNumberConstrains;
 		v = 0;
@@ -54,15 +54,15 @@ public class LinearProgram {
 	}
 
 	public Optional<Integer> determineLeavingVariable(int pEnteringVariable) {
-		double[] coefficientsLeavingVariable = A[getNonBasicVariablesIndex(pEnteringVariable)];
+		int enteringVariableIndex =  getNonBasicVariablesIndex(pEnteringVariable);
 
 		double min = Double.MAX_VALUE;
 		Integer leavingVariable = null;
 		for (int constrainIndex = 0; constrainIndex < numberConstrains; constrainIndex++) {
-			double coefficient = coefficientsLeavingVariable[constrainIndex];
+			double coefficient = A[constrainIndex][enteringVariableIndex]; 
 			if (coefficient < 0) {
 				double value = b[constrainIndex] / (-coefficient);
-				if (min > value) {
+				if (min > value) { 
 					min = value;
 					leavingVariable = constrainIndex;
 				}
@@ -111,7 +111,7 @@ public class LinearProgram {
 		int newLeavingIndex = oldEnteringIndex;
 
 		double[] newC = new double[numberVariables];
-		double[][] newA = new double[numberVariables][numberConstrains];
+		double[][] newA = new double[numberConstrains][numberVariables];
 		double[] newB = new double[numberConstrains];
 
 		double a_l_e = A[oldLeavingIndex][oldEnteringIndex];
