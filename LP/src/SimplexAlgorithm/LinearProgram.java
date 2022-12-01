@@ -31,6 +31,10 @@ public class LinearProgram {
 			basicValues.add(index);
 		}
 	}
+	
+	public double[] getC() {
+		return c;
+	} 
 
 	public boolean hasAnyPositiveC() {
 		for (double d : c) {
@@ -68,7 +72,7 @@ public class LinearProgram {
 		throw new IllegalStateException("Variable isn't non basic variable");
 	}
 
-	private Integer getNonBasicVariables(Integer pVariableNumberIndex) {
+	public Integer getNonBasicVariables(Integer pVariableNumberIndex) {
 		if (pVariableNumberIndex == null) {
 			return null;
 		}
