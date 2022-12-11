@@ -8,11 +8,10 @@ import CinemaShowing.MapCinemaShowingsToLinearProgram;
 import CinemaShowing.MapCinemaShowingsToLinearProgram.Wrapper;
 import CinemaShowing.SimplexAlgorithm.LinearProgramVariable;
 import CsvImporter.MapCsvToCinemaShowing;
-import SimplexAlgorithm.LinearProgram;
-import SimplexAlgorithm.Simplex;
-import SimplexAlgorithm.LinearProgrammResult;
+import lpsolve.LpSolve;
+import lpsolve.LpSolveException;
 
-public class ScheduleCinemaShowing {
+public class ScheduleCinemaShowingLpSolver {
 
 	private static final String CSV_SUFFIX = ".csv";
 
@@ -24,32 +23,32 @@ public class ScheduleCinemaShowing {
 
 		try {
 			List<CinemaShowing> cinemaShowings = MapCsvToCinemaShowing.convertCsvFile(filepath);
-			Wrapper<LinearProgram> linearProgram = MapCinemaShowingsToLinearProgram.convertLinearProgram(cinemaShowings);
-			LinearProgrammResult result = Simplex.doSimplex(linearProgram.getSolver(), Simplex.BLAND_RULE);
-			if (result != LinearProgrammResult.FEASIBLE) {
-				System.out.println("Result: " + result); 
-			} else {
-				printResult(linearProgram); 
-			}
-
+			Wrapper<LpSolve> linearProgram = MapCinemaShowingsToLinearProgram.convertLpSolve(cinemaShowings);
+			linearProgram.getSolver().solve();
+			printSchedulePlan(linearProgram);
+			linearProgram.getSolver().deleteLp(); 
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LpSolveException e) { 
 			e.printStackTrace();
 		}
 		System.out.println("Done!");
 	}
 
-	private static void printResult(Wrapper<LinearProgram> linearProgram) { 
-		double[] result = linearProgram.getSolver().getResult();
-		for (LinearProgramVariable var : linearProgram.getVariables()) {
+
+	public static void printSchedulePlan(Wrapper<LpSolve> solver) throws LpSolveException {
+		double[] result = solver.getSolver().getPtrVariables();
+		System.out.println("Solver variables: " + result.length + ", variables: " + solver.getVariables().size());
+		
+		for (LinearProgramVariable var : solver.getVariables()) { 
 			double resultValue = result[var.getIndex()];
 			String cinemaShowingDescription = var.getCinemaShowing().getLineInCsv() + ", result was: " + resultValue;
 			if (resultValue > 0.9) {
 				System.out.println("Visit: " + cinemaShowingDescription);
 			} else {
 				System.out.println("Dont visit: " + cinemaShowingDescription);
-			} 
+			}
 
 		}
-
 	}
 }

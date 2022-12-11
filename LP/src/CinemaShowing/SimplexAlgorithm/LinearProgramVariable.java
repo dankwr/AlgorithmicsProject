@@ -1,4 +1,6 @@
-package CinemaShowing;
+package CinemaShowing.SimplexAlgorithm;
+
+import CinemaShowing.CinemaShowing;
 
 public class LinearProgramVariable {
 
@@ -14,8 +16,16 @@ public class LinearProgramVariable {
 		return index;
 	} 
 	
+	public int getIncIndex() {
+		return index + 1;
+	} 
+	
 	public CinemaShowing getCinemaShowing() {
 		return cinemaShowing;
 	}
 
+	@Override
+	public String toString() {
+		return cinemaShowing.toString();
+	}
 }

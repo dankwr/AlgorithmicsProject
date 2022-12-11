@@ -15,11 +15,12 @@ import CinemaShowing.CinemaShowing;
 import CinemaShowing.MapCinemaShowingsToLinearProgram;
 import CinemaShowing.MapCinemaShowingsToLinearProgram.Wrapper;
 import CsvImporter.MapCsvToCinemaShowing;
-import SimplexAlgorithm.LinearProgram;
-import SimplexAlgorithm.Simplex;
 import SimplexAlgorithm.LinearProgrammResult;
+import lpsolve.LogListener;
+import lpsolve.LpSolve;
+import lpsolve.LpSolveException;
 
-public class ScheduleAllCinemaShowing {
+public class ScheduleAllCinemaShowingLpSolver {
 
 	private static final String CSV_SUFFIX = ".csv";
 
@@ -27,27 +28,31 @@ public class ScheduleAllCinemaShowing {
 		assert args.length == 1;
 
 		String folderpath = args[0];
-		List<String> files = new ArrayList<>(); 
+		List<String> files = new ArrayList<>();
 		try (Stream<Path> paths = Files.walk(Paths.get(folderpath))) {
 			files = paths.filter(Files::isRegularFile).map(Path::toString).collect(Collectors.toList());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		for (String filepath : files) {
-			if(!filepath.endsWith(CSV_SUFFIX))
+			if (!filepath.endsWith(CSV_SUFFIX))
 				continue;
 			try {
-
+				System.out.println("Start with  " + filepath);
+				List<CinemaShowing> cinemaShowings = MapCsvToCinemaShowing.convertCsvFile(filepath);
+				Wrapper<LpSolve> linearProgram = MapCinemaShowingsToLinearProgram.convertLpSolve(cinemaShowings);
+				linearProgram.getSolver().setOutputfile(""); 
+				
 				Instant start = Instant.now();
-				List<CinemaShowing> cinemaShowings = MapCsvToCinemaShowing.convertCsvFile(filepath); 
-				Wrapper<LinearProgram> linearProgram = MapCinemaShowingsToLinearProgram.convertLinearProgram(cinemaShowings);
-				LinearProgrammResult result = Simplex.doSimplex(linearProgram.getSolver(), Simplex.BLAND_RULE);  
+				linearProgram.getSolver().solve();
 				Instant end = Instant.now();
-				Duration interval = Duration.between(start, end);
-				System.out.println(filepath + ": Execution time in milliseconds: " + interval.getNano() / 1000000 + " and result: " + result);
+				Duration interval = Duration.between(start, end); 
+				System.out.println(filepath + ": Execution time: " + interval.getSeconds() + "."
+						+ interval.getNano() / 1000000 + " sec, result is " + linearProgram.getSolver().getStatustext(linearProgram.getSolver().getStatus()));
+				linearProgram.getSolver().deleteLp();
 			} catch (Exception e) {
 				System.out.println(filepath);
-				e.printStackTrace(); 
+				e.printStackTrace();
 			}
 		}
 		System.out.println("Done!");

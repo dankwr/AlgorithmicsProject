@@ -7,10 +7,6 @@ public class Simplex {
 
 	public static final ChoosingStrategy BLAND_RULE = new BlandRule();  
 	 
-	public enum LinearProgrammResult {
-		INFEASIBLE, UNBOUNDED, FEASIBLE;
-	}
-
 	public static LinearProgrammResult doSimplex(LinearProgram pLP, ChoosingStrategy pChoosingStrategy) {
 		LinearProgrammResult result = initializeLinearProgram(pLP, pChoosingStrategy);
 		if(result != LinearProgrammResult.INFEASIBLE) {

@@ -1,4 +1,4 @@
-package CinemaShowing;
+package CinemaShowing.SimplexAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,15 +9,17 @@ public class TitleConstraint {
 
 	public TitleConstraint() {
 		variables = new ArrayList<>();
-	} 
+	}
 
 	public void addLinearProgramVariable(LinearProgramVariable pVariable) {
 		variables.add(pVariable);
 	}
-	
-	public List<LinearProgramVariable> getVariables() {
-		return Collections.unmodifiableList(variables); 
-	}
-	
 
+	public List<LinearProgramVariable> getVariables() {
+		return Collections.unmodifiableList(variables);
+	}
+
+	public boolean isNecessary() {
+		return variables.size() > 1;
+	}
 }

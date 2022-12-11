@@ -56,4 +56,8 @@ public class CinemaShowing {
 		return lineInCsv;
 	}
 
+	@Override
+	public String toString() {
+		return lineInCsv;
+	}
 }

@@ -1,4 +1,4 @@
-package CinemaShowing;
+package CinemaShowing.SimplexAlgorithm;
 
 import java.util.List;
 
