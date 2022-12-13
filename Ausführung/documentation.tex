@@ -1,0 +1,61 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{amsmath, graphicx, url}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage{comment}
+\usepackage{tabto}
+
+
+\title{Projekt: Die Nordischen Filmtage}
+\author{
+    Raik Dankworth}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Einleitung}
+
+In diesem Projekt geht es darum, sich ein Verfahren zu überlegen, mit dessen Hilfe man entscheiden kann, welche Filme man bei den Nordischen Filmtage besuchen sollte.
+Die Anforderungen sind dabei, dass keine Filme doppelt besucht werden und man nur ein Film gleichzeitig ansehen kann.
+Es ist der Plan zu wählen, mit dessen Hilfe man so viele gute Filme wie möglich sehen kann.
+Um die Filme zu vergleichen, wird das ImDb-Ranking genutzt.
+Dafür sind zu allen Filmvorstellungen angegeben, an welchen Tag und zu welcher Zeit welcher Film, identifiziert mit seinem Titel, gezeigt werden. 
+Zusätzlich ist noch die Dauer der Vorstellung und das ImDb-Ranking des Films angegeben.
+Die Laufzeit zwischen den Spielstätten spielt keine Rolle, d.h. am Ende einer Vorstellung kann direkt die nächste Vorstellung besucht werden.
+
+\section{Vorgehen}
+
+\subsection{Definition des ILP}
+Das Schedule-Problem wird als 0-1-ILP modelliert.
+
+\tabto{.03\linewidth} maximiere 
+\begin{equation} \label{equ:objectFunction1}
+    \sum_i^n r_i x_i
+\end{equation}
+\tabto{.03\linewidth} sodass 
+\begin{equation} \label{equ:titleConstraints1}
+    \forall f: \sum\limits_{i < n \> \land \> f = f_i} x_i \leq 1
+\end{equation}
+\begin{equation} \label{equ:overlappingConstraints1}
+    \forall i < j < n \textmd{ mit  } t_i \cap t_j \neq \emptyset: x_i + x_j \leq 1
+\end{equation}
+\begin{equation} \label{equ:ilp1}
+    \forall i < n: x_i \in \{0, 1\}
+\end{equation}
+Alle $n$ Filmvorstellungen werden durchnummeriert und mit den Variablen $x_i$ abgebildet.
+Ist der Wert dieser Variablen 1, sollte diese Vorstellung besucht werden, sonst ist nur 0 zulässig \eqref{equ:ilp1}.
+Es muss dabei jedoch auch beachtet werden, dass jeder Film $f$ nur einmal besucht werden darf.
+Deshalb darf nur eine Filmvorstellung pro Film besucht werden \eqref{equ:titleConstraints1}.
+Auch dürfen sich die Vorstellungszeiten $t_i$ der besuchten Vorstellungen nicht überschneiden \eqref{equ:overlappingConstraints1}.
+Wir interessieren uns natürlich nur für die besten Filme, welche vorgestellt werden.
+Dies wird über die Zielfunktion \eqref{equ:objectFunction1} mittels des Ranking $r_i$ abgebildet.
+
+\subsection{Programmierung}
+
+\section{Auswertung}
+
+
+\end{document}
