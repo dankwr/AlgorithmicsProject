@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{comment}
 \usepackage{tabto}
+\usepackage{hyperref}
 
 
 \title{Projekt: Die Nordischen Filmtage}
@@ -55,7 +56,7 @@ Dies wird über die Zielfunktion \eqref{equ:objectFunction1} mittels des Ranking
 
 \subsection{Programmierung}
 
-Das Programm ist in Java programmiert.
+Das Programm ist in Java programmiert und im GitHub \footnote{\url{https://github.com/dankwr/AlgorithmicsProject}} hinterlegt.
 Hierbei sind zwei unterschiedliche Einstiegsmöglichkeiten gewählt worden. 
 Zum einem kann eine spezifische CSV-Datei eingelesen werden und der enthaltene Vorstellungsplan wird ausgewertet.
 Am Ende wird auf der Console ausgegeben, welche Vorstellungen besucht werden sollten. 
@@ -95,14 +96,25 @@ Hierbei wird beachtet, dass doppelte oder sinnlose Einschränkungen vermieden we
 Das heißt Filme, die nur einmal vorkommen, brauchen auch nicht über die \texttt{TitleConstraint} abgebildet werden, da hier nicht verhindert werden muss, dass dieser Film mehr als einmal besucht wird.
 Genauso wird beim \texttt{OverlappingConstraint} darauf geachtet, dass jede Einschränkung nur einmal auftaucht.
 
+Wichtig ist hierbei noch, dass ein 0-1-ILP abgebildet werden muss.
+Dies geht über die Bibliothek \texttt{LpSolve} relativ charmant, da hierfür zu jeder Variable nur ein Flag und die Oberschranke auf 1 gesetzt werden muss.
+Bei dem eigenen Simplex Algorithmus hatte ich zu erst mit einer Relaxierung versucht, in der Hoffnung das ich später mit besseren Einschränkungen das Verfahren nutzen kann.
+Damals war mir schon bewusst, dass die Relaxierung wahrscheinlich nicht funktioniert, da die Koeffizientenmatrix wahrscheinlich nicht total unimodular ist.  
+
 Im \texttt{MapCinemaShowingsToLinearProgram} werden diese Variablen und Einschränkungen erzeugt und dann etwa mit der Methode \linebreak \texttt{convertLinearProgram} zu einem linearen Programm umgewandelt, welcher mein eigener Simplex Algorithmus verarbeiten kann oder mit Hilfe der Methode \texttt{convertLpSolve} in einen \texttt{LpSolve}.
-Bei beiden Formaten wird dies noch in \texttt{Wrapper} verpackt, da in beiden Formaten die Informationen, welcher Index welche Filmvorstellung abbildet, nicht enthalten ist.
+Bei beiden Formaten wird dies noch in \texttt{Wrapper} verpackt, da beide die Informationen, welcher Index welche Filmvorstellung abbildet, nicht enthalten.
 
 \subsubsection{Optimale Lösung bestimmen}
 
+Die Ermittlung der optimalen Lösung zu dem LP ist mittels des \texttt{LpSolve} einfach.
+Dort muss auf dem entsprechende erzeugten \texttt{LpSolve} nur noch die Methode \texttt{solve} aufgerufen werden.
+Nach der Terminierung oder dem Timeout kann, das Ergebnis ausgewertet werden.
 
+Auf den eigenen Simplex Algorithmus möchte ich hier nicht zu sehr eingehen, da nach dem Nutzen der externen Bibliothek dieser nicht weiter gepflegt bzw. verwendet wurde.
+Jedoch möchte ich erwähnen, dass dies noch weiterhin im Package \texttt{SimplexAlgorithm} vorliegt.
 
 \section{Auswertung}
+
 
 
 \end{document}
