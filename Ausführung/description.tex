@@ -6,6 +6,9 @@
 \usepackage{comment}
 \usepackage{tabto}
 \usepackage{hyperref}
+\usepackage{booktabs} 
+\usepackage[ngerman]{babel}
+\usepackage{pgfplots}
 
 
 \title{Projekt: Die Nordischen Filmtage}
@@ -115,6 +118,72 @@ Jedoch möchte ich erwähnen, dass dies noch weiterhin im Package \texttt{Simple
 
 \section{Auswertung}
 
+
+\begin{table}
+    \begin{tabular}{r|l|r|c|r}
+        \toprule
+        Nummer & Datei & Ausführungszeit in sec & Lösungsstatus & Güte \\
+        \midrule
+        1 & NFL18\_039\_So & & & \\
+        2 & NFL18\_047\_Do & & & \\
+        3 & NFL19\_033\_Premiere & & & \\
+        4 & NFL19\_035\_startSE & & & \\
+        5 & NFL17\_036\_SE & & & \\
+        6 & NFL17\_041\_Do & & & \\
+        7 & NFL17\_042 & & & \\
+        8 & NFL17\_042\_So & & & \\
+        9 & NFL17\_043\_Fr & & & \\
+        10 & NFL17\_051\_gute\_IMDb\_Spielfilme & & & \\
+        11 & NFL17\_051\_Sa & & & \\
+        12 & NFL17\_064\_WE\_CS & & & \\
+        \bottomrule
+    \end{tabular}
+    \caption{Ergebnisse für die reelen Daten} 
+    \label{tab:results} 
+\end{table}
+
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+        ybar,
+        bar width=10pt,
+        %
+        nodes near coords,
+        nodes near coords align=above,
+        point meta=rawy,
+        %
+        axis x line=bottom,
+        axis y line=left,
+        ymajorgrids=true,
+        %
+        ylabel=Ausführungszeit in sec,
+        ymin=0,
+        ytick={0,60,120,180,240,300,360},
+        enlargelimits=auto,
+        %
+        xlabel=Dateien-Nummer,
+        symbolic x coords ={1,2,3,4,5,6,7,8,9,10,11,12},
+        ]
+    
+        \addplot[fill=blue] coordinates {
+            (1,220.6)
+            (2,219.26)
+            (3,197.67)
+            (4,167.9)
+            (5,40)
+            (6,1)
+            (7,1)
+            (8,1)
+            (9,1)
+            (10,1)
+            (11,1)
+            (12,1)
+        };
+        \end{axis} 
+    \end{tikzpicture}
+    \caption{Vergleich der Ausführungszeiten zu den reelen Datensätzen}
+    \label{fig:executiontime}
+\end{figure}
 
 
 \end{document}
