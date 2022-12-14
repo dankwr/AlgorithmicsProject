@@ -1,0 +1,106 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{amsmath, graphicx, url}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage{comment}
+\usepackage{tabto}
+
+
+\title{Projekt: Die Nordischen Filmtage}
+\author{
+    Raik Dankworth}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Einleitung}
+
+In diesem Projekt geht es darum, sich ein Verfahren zu überlegen, mit dessen Hilfe man entscheiden kann, welche Filme man bei den Nordischen Filmtage besuchen sollte.
+Die Anforderungen sind dabei, dass keine Filme doppelt besucht werden und man nur ein Film gleichzeitig ansehen kann.
+Es ist der Plan zu wählen, mit dessen Hilfe man so viele gute Filme wie möglich sehen kann.
+Um die Filme zu vergleichen, wird das ImDb-Ranking genutzt.
+Dafür sind zu allen Filmvorstellungen angegeben, an welchen Tag und zu welcher Zeit welcher Film, identifiziert mit seinem Titel, gezeigt werden. 
+Zusätzlich ist noch die Dauer der Vorstellung und das ImDb-Ranking des Films angegeben.
+Die Laufzeit zwischen den Spielstätten spielt keine Rolle, d.h. am Ende einer Vorstellung kann direkt die nächste Vorstellung besucht werden.
+
+\section{Vorgehen}
+
+\subsection{Definition des ILP}
+Das Schedule-Problem wird als 0-1-ILP modelliert.
+
+\tabto{.03\linewidth} maximiere 
+\begin{equation} \label{equ:objectFunction1}
+    \sum_i^n r_i x_i
+\end{equation}
+\tabto{.03\linewidth} sodass 
+\begin{equation} \label{equ:titleConstraints1}
+    \forall f: \sum\limits_{i < n \> \land \> f = f_i} x_i \leq 1
+\end{equation}
+\begin{equation} \label{equ:overlappingConstraints1}
+    \forall i < j < n \textmd{ mit  } t_i \cap t_j \neq \emptyset: x_i + x_j \leq 1
+\end{equation}
+\begin{equation} \label{equ:ilp1}
+    \forall i < n: x_i \in \{0, 1\}
+\end{equation}
+Alle $n$ Filmvorstellungen werden durchnummeriert und mit den Variablen $x_i$ abgebildet.
+Ist der Wert dieser Variablen 1, sollte diese Vorstellung besucht werden, sonst ist nur 0 zulässig \eqref{equ:ilp1}.
+Es muss dabei jedoch auch beachtet werden, dass jeder Film $f$ nur einmal besucht werden darf.
+Deshalb darf nur eine Filmvorstellung pro Film besucht werden \eqref{equ:titleConstraints1}.
+Auch dürfen sich die Vorstellungszeiten $t_i$ der besuchten Vorstellungen nicht überschneiden \eqref{equ:overlappingConstraints1}.
+Wir interessieren uns natürlich nur für die besten Filme, welche vorgestellt werden.
+Dies wird über die Zielfunktion \eqref{equ:objectFunction1} mittels des Ranking $r_i$ abgebildet.
+
+\subsection{Programmierung}
+
+Das Programm ist in Java programmiert.
+Hierbei sind zwei unterschiedliche Einstiegsmöglichkeiten gewählt worden. 
+Zum einem kann eine spezifische CSV-Datei eingelesen werden und der enthaltene Vorstellungsplan wird ausgewertet.
+Am Ende wird auf der Console ausgegeben, welche Vorstellungen besucht werden sollten. 
+Dies wird über ScheduleCinemaShowingLpSolver gemacht.
+Zum anderen steht ein Programm zu Verfügung mit dessen Hilfe alle CSV-Dateien in einem Ordner verarbeitet werden.
+Hierbei wird jedoch nur die Ausführungszeit und das Ergebnis der Berechnung ausgegeben.
+Die Ausführungszeit ist auf 5 min begrenzt.
+Dies wird von ScheduleAllCinemaShowingLpSolver ausgeführt.
+
+Der Programm zum Berechnen der optimalen Lösung ist in 3 Teilaufgaben unterteilt. 
+Als erstes wird eine bestimmte CSV-Datei eingelesen und daraus ein codeseitige Abbildung der Filmvorstellungen erstellt.
+Danach werden mit diesen Filmvorstellungen das lineare Programm mit seinen Einschränkungen erzeugt.
+Mit diesen linearen Programm kann dann die optimalste Lösung für den Vorstellungsplan aus der gegebenen CSV-Datei bestimmt werden.
+
+\subsubsection{CSV-Datei einlesen und aufbereiten}
+
+Die einzelnen Filmvorstellungen sind im Code als Objekte der Klasse CinemaShowing abgebildet.
+Diese werde in der Klasse MapCsvToCinemaShowing aus den CSV-Dateien erzeugt.
+Wichtig zu erwähnen ist hierbei, dass schon eine gewisse Aufbereitung der Informationen vorgenommen wird.
+So wird die Uhrzeit als Integer festgehalten, indem die genaue Minute des Tages berechnet wird. 
+Anders gesagt die Stunde der Uhrzeit wurde mit 60 multipliziert und mit der Minute der Uhrzeit addiert.
+Die Dauer der Vorstellung wird auch nicht so weiter verwendet, sondern mit der Startzeit addiert, um die entsprechende Endzeit der Vorstellung in Minuten zu erhalten.
+Diese Vorberechnung hat den Hintergrund, das hiermit eine einfachere Abfrage zur überschneidung zweier Vorstellungen möglich ist.
+Alle anderen Informationen werden genauso wie in der CSV-Datei angegeben festgehalten.
+
+\subsubsection{Lineares Programm erstellen}
+
+Im ersten Ansatz hatte ich einen eigenen Simplex Algorithmus entwickelt.
+Jedoch hat besonders die Pivot-Berechnung eine Fehleranalyse extrem schwer gemacht, weshalb ich zum Teil nicht wusste, ob das lineare Programm schlecht gewählt war oder der Simplex Algorithmus fehlerhaft.
+Deshalb habe ich nach kurzer Zeit stattdessen die Bibliothek LpSolve in der Version 5.5.2 genutzt.
+
+Bei beiden Varianten müssen jedoch aus den Filmvorstellungen (tech.: CinemaShowing), die Variablen und die Einschränkungen generiert werden.
+Die Variablen sind über LinearProgramVariable abgebildet, wobei dort nur die CinemaShowing mit einem Index verbunden werden.
+Diese werden dann auch benutzt, um die beiden Einschränkungsarten \eqref{equ:titleConstraints1} und \eqref{equ:overlappingConstraints1} zu erstellen.
+Die Klasse TitleConstraint bildet somit die Einschränkung \eqref{equ:titleConstraints1} ab und OverlappingConstraint \eqref{equ:overlappingConstraints1}.
+Hierbei wird beachtet, dass doppelte oder sinnlose Einschränkungen vermieden werden.
+Das heißt Filme die nur einmal vorkommen, brauchen auch nicht über die TitleConstraint abgebildet werden, da hier nicht verhindert werden muss, dass dieser Film mehr als einmal besucht wird.
+Genauso wird beim OverlappingConstraint darauf geachtet, dass jede Einschränkung nur einmal auftaucht.
+
+Im MapCinemaShowingsToLinearProgram werden diese Variablen und Einschränkungen erzeugt und dann etwa mit der Methode convertLinearProgram zu einem linearen Programm umgewandelt, welcher mein eigener Simplex Algorithmus verarbeiten kann oder mit Hilfe der Methode convertLpSolve in einen LpSolve.
+Bei beiden Formaten wird dies noch in Wrapper verpackt, da in beiden Formaten die Informationen, welcher Index welche Filmvorstellung abbildet, nicht enthalten ist.
+
+\subsubsection{Optimale Lösung bestimmen}
+
+\section{Auswertung}
+
+
+\end{document}
