@@ -59,11 +59,11 @@ Das Programm ist in Java programmiert.
 Hierbei sind zwei unterschiedliche Einstiegsmöglichkeiten gewählt worden. 
 Zum einem kann eine spezifische CSV-Datei eingelesen werden und der enthaltene Vorstellungsplan wird ausgewertet.
 Am Ende wird auf der Console ausgegeben, welche Vorstellungen besucht werden sollten. 
-Dies wird über ScheduleCinemaShowingLpSolver gemacht.
+Dies wird über \texttt{ScheduleCinemaShowingLpSolver} gemacht.
 Zum anderen steht ein Programm zu Verfügung mit dessen Hilfe alle CSV-Dateien in einem Ordner verarbeitet werden.
 Hierbei wird jedoch nur die Ausführungszeit und das Ergebnis der Berechnung ausgegeben.
 Die Ausführungszeit ist auf 5 min begrenzt.
-Dies wird von ScheduleAllCinemaShowingLpSolver ausgeführt.
+Dies wird von \linebreak \texttt{ScheduleAllCinemaShowingLpSolver} ausgeführt.
 
 Der Programm zum Berechnen der optimalen Lösung ist in 3 Teilaufgaben unterteilt. 
 Als erstes wird eine bestimmte CSV-Datei eingelesen und daraus ein codeseitige Abbildung der Filmvorstellungen erstellt.
@@ -72,8 +72,8 @@ Mit diesen linearen Programm kann dann die optimalste Lösung für den Vorstellu
 
 \subsubsection{CSV-Datei einlesen und aufbereiten}
 
-Die einzelnen Filmvorstellungen sind im Code als Objekte der Klasse CinemaShowing abgebildet.
-Diese werde in der Klasse MapCsvToCinemaShowing aus den CSV-Dateien erzeugt.
+Die einzelnen Filmvorstellungen sind im Code als Objekte der Klasse \linebreak \texttt{CinemaShowing} abgebildet.
+Diese werde in der Klasse  \linebreak \texttt{MapCsvToCinemaShowing} aus den CSV-Dateien erzeugt.
 Wichtig zu erwähnen ist hierbei, dass schon eine gewisse Aufbereitung der Informationen vorgenommen wird.
 So wird die Uhrzeit als Integer festgehalten, indem die genaue Minute des Tages berechnet wird. 
 Anders gesagt die Stunde der Uhrzeit wurde mit 60 multipliziert und mit der Minute der Uhrzeit addiert.
@@ -85,20 +85,22 @@ Alle anderen Informationen werden genauso wie in der CSV-Datei angegeben festgeh
 
 Im ersten Ansatz hatte ich einen eigenen Simplex Algorithmus entwickelt.
 Jedoch hat besonders die Pivot-Berechnung eine Fehleranalyse extrem schwer gemacht, weshalb ich zum Teil nicht wusste, ob das lineare Programm schlecht gewählt war oder der Simplex Algorithmus fehlerhaft.
-Deshalb habe ich nach kurzer Zeit stattdessen die Bibliothek LpSolve in der Version 5.5.2 genutzt.
+Deshalb habe ich nach kurzer Zeit stattdessen die Bibliothek \texttt{LpSolve} in der Version 5.5.2 genutzt.
 
-Bei beiden Varianten müssen jedoch aus den Filmvorstellungen (tech.: CinemaShowing), die Variablen und die Einschränkungen generiert werden.
-Die Variablen sind über LinearProgramVariable abgebildet, wobei dort nur die CinemaShowing mit einem Index verbunden werden.
+Bei beiden Varianten müssen jedoch aus den Filmvorstellungen, die Variablen und die Einschränkungen generiert werden.
+Die Variablen sind über \texttt{LinearProgramVariable} abgebildet, wobei dort nur die \texttt{CinemaShowing} mit einem Index verbunden werden.
 Diese werden dann auch benutzt, um die beiden Einschränkungsarten \eqref{equ:titleConstraints1} und \eqref{equ:overlappingConstraints1} zu erstellen.
-Die Klasse TitleConstraint bildet somit die Einschränkung \eqref{equ:titleConstraints1} ab und OverlappingConstraint \eqref{equ:overlappingConstraints1}.
+Die Klasse \linebreak \texttt{TitleConstraint} bildet somit die Einschränkung \eqref{equ:titleConstraints1} ab und \linebreak \texttt{OverlappingConstraint} \eqref{equ:overlappingConstraints1}.
 Hierbei wird beachtet, dass doppelte oder sinnlose Einschränkungen vermieden werden.
-Das heißt Filme die nur einmal vorkommen, brauchen auch nicht über die TitleConstraint abgebildet werden, da hier nicht verhindert werden muss, dass dieser Film mehr als einmal besucht wird.
-Genauso wird beim OverlappingConstraint darauf geachtet, dass jede Einschränkung nur einmal auftaucht.
+Das heißt Filme, die nur einmal vorkommen, brauchen auch nicht über die \texttt{TitleConstraint} abgebildet werden, da hier nicht verhindert werden muss, dass dieser Film mehr als einmal besucht wird.
+Genauso wird beim \texttt{OverlappingConstraint} darauf geachtet, dass jede Einschränkung nur einmal auftaucht.
 
-Im MapCinemaShowingsToLinearProgram werden diese Variablen und Einschränkungen erzeugt und dann etwa mit der Methode convertLinearProgram zu einem linearen Programm umgewandelt, welcher mein eigener Simplex Algorithmus verarbeiten kann oder mit Hilfe der Methode convertLpSolve in einen LpSolve.
-Bei beiden Formaten wird dies noch in Wrapper verpackt, da in beiden Formaten die Informationen, welcher Index welche Filmvorstellung abbildet, nicht enthalten ist.
+Im \texttt{MapCinemaShowingsToLinearProgram} werden diese Variablen und Einschränkungen erzeugt und dann etwa mit der Methode \linebreak \texttt{convertLinearProgram} zu einem linearen Programm umgewandelt, welcher mein eigener Simplex Algorithmus verarbeiten kann oder mit Hilfe der Methode \texttt{convertLpSolve} in einen \texttt{LpSolve}.
+Bei beiden Formaten wird dies noch in \texttt{Wrapper} verpackt, da in beiden Formaten die Informationen, welcher Index welche Filmvorstellung abbildet, nicht enthalten ist.
 
 \subsubsection{Optimale Lösung bestimmen}
+
+
 
 \section{Auswertung}
 
