@@ -48,11 +48,11 @@ Das Schedule-Problem wird als 0-1-ILP modelliert.
 \end{equation}
 Alle $n$ Filmvorstellungen werden durchnummeriert und mit den Variablen $x_i$ abgebildet.
 Ist der Wert dieser Variablen 1, sollte diese Vorstellung besucht werden, sonst ist nur 0 zulässig \eqref{equ:ilp1}.
-Es muss dabei jedoch auch beachtet werden, dass jeder Film $f$ nur einmal besucht werden darf.
-Deshalb darf nur eine Filmvorstellung pro Film besucht werden \eqref{equ:titleConstraints1}.
+Es muss dabei jedoch auch beachtet werden, dass jeder Film $f$ nur maximal einmal besucht werden darf.
+Mehrere Filmvorstellung eines Films sind somit nicht zulässig \eqref{equ:titleConstraints1}.
 Auch dürfen sich die Vorstellungszeiten $t_i$ der besuchten Vorstellungen nicht überschneiden \eqref{equ:overlappingConstraints1}.
 Wir interessieren uns natürlich nur für die besten Filme, welche vorgestellt werden.
-Dies wird über die Zielfunktion \eqref{equ:objectFunction1} mittels des Ranking $r_i$ abgebildet.
+Dies wird über die Zielfunktion \eqref{equ:objectFunction1} mittels des Ranking $r_i$ der jeweiligen Vorstellungen $x_i$ abgebildet.
 
 \subsection{Programmierung}
 
@@ -64,7 +64,7 @@ Dies wird über \texttt{ScheduleCinemaShowingLpSolver} gemacht.
 Zum anderen steht ein Programm zu Verfügung mit dessen Hilfe alle CSV-Dateien in einem Ordner verarbeitet werden.
 Hierbei wird jedoch nur die Ausführungszeit und das Ergebnis der Berechnung ausgegeben.
 Die Ausführungszeit ist auf 5 min begrenzt.
-Dies wird von \linebreak \texttt{ScheduleAllCinemaShowingLpSolver} ausgeführt.
+Dies wird von  \texttt{ScheduleAllCinemaShowingLpSolver} ausgeführt.
 
 Der Programm zum Berechnen der optimalen Lösung ist in 3 Teilaufgaben unterteilt. 
 Als erstes wird eine bestimmte CSV-Datei eingelesen und daraus ein codeseitige Abbildung der Filmvorstellungen erstellt.
@@ -77,21 +77,21 @@ Die einzelnen Filmvorstellungen sind im Code als Objekte der Klasse \linebreak \
 Diese werde in der Klasse  \linebreak \texttt{MapCsvToCinemaShowing} aus den CSV-Dateien erzeugt.
 Wichtig zu erwähnen ist hierbei, dass schon eine gewisse Aufbereitung der Informationen vorgenommen wird.
 So wird die Uhrzeit als Integer festgehalten, indem die genaue Minute des Tages berechnet wird. 
-Anders gesagt die Stunde der Uhrzeit wurde mit 60 multipliziert und mit der Minute der Uhrzeit addiert.
-Die Dauer der Vorstellung wird auch nicht so weiter verwendet, sondern mit der Startzeit addiert, um die entsprechende Endzeit der Vorstellung in Minuten zu erhalten.
-Diese Vorberechnung hat den Hintergrund, das hiermit eine einfachere Abfrage zur überschneidung zweier Vorstellungen möglich ist.
+Anders gesagt die Stunde der Uhrzeit wurde mit 60 multipliziert und mit der Minute der Uhrzeit addiert und als Startzeit gemerkt.
+Die Dauer der Vorstellung wird auch nicht so weiter verwendet, sondern mit der Startzeit addiert, um die entsprechende Endzeit der Vorstellung zu erhalten.
+Diese Vorberechnung hat den Hintergrund, das hiermit eine einfachere Abfrage zur Überschneidung zweier Vorstellungen möglich ist.
 Alle anderen Informationen werden genauso wie in der CSV-Datei angegeben festgehalten.
 
 \subsubsection{Lineares Programm erstellen}
 
 Im ersten Ansatz hatte ich einen eigenen Simplex Algorithmus entwickelt.
-Jedoch hat besonders die Pivot-Berechnung eine Fehleranalyse extrem schwer gemacht, weshalb ich zum Teil nicht wusste, ob das lineare Programm schlecht gewählt war oder der Simplex Algorithmus fehlerhaft.
+Jedoch hat besonders die Pivot-Berechnung eine Fehleranalyse extrem schwer gemacht, weshalb ich zum Teil nicht mehr wusste, ob das lineare Programm schlecht gewählt war oder der Simplex Algorithmus fehlerhaft.
 Deshalb habe ich nach kurzer Zeit stattdessen die Bibliothek \texttt{LpSolve} in der Version 5.5.2 genutzt.
 
-Bei beiden Varianten müssen jedoch aus den Filmvorstellungen, die Variablen und die Einschränkungen generiert werden.
+Bei beiden Varianten müssen jedoch aus den Filmvorstellungen die Variablen und die Einschränkungen generiert werden.
 Die Variablen sind über \texttt{LinearProgramVariable} abgebildet, wobei dort nur die \texttt{CinemaShowing} mit einem Index verbunden werden.
 Diese werden dann auch benutzt, um die beiden Einschränkungsarten \eqref{equ:titleConstraints1} und \eqref{equ:overlappingConstraints1} zu erstellen.
-Die Klasse \linebreak \texttt{TitleConstraint} bildet somit die Einschränkung \eqref{equ:titleConstraints1} ab und \linebreak \texttt{OverlappingConstraint} \eqref{equ:overlappingConstraints1}.
+Die Objekte der Klasse \texttt{TitleConstraint} bilden dabei die Einschränkungen der Art \eqref{equ:titleConstraints1} ab und \texttt{OverlappingConstraint} die Art \eqref{equ:overlappingConstraints1}.
 Hierbei wird beachtet, dass doppelte oder sinnlose Einschränkungen vermieden werden.
 Das heißt Filme, die nur einmal vorkommen, brauchen auch nicht über die \texttt{TitleConstraint} abgebildet werden, da hier nicht verhindert werden muss, dass dieser Film mehr als einmal besucht wird.
 Genauso wird beim \texttt{OverlappingConstraint} darauf geachtet, dass jede Einschränkung nur einmal auftaucht.
@@ -102,7 +102,7 @@ Bei dem eigenen Simplex Algorithmus hatte ich zu erst mit einer Relaxierung vers
 Damals war mir schon bewusst, dass die Relaxierung wahrscheinlich nicht funktioniert, da die Koeffizientenmatrix wahrscheinlich nicht total unimodular ist.  
 
 Im \texttt{MapCinemaShowingsToLinearProgram} werden diese Variablen und Einschränkungen erzeugt und dann etwa mit der Methode \linebreak \texttt{convertLinearProgram} zu einem linearen Programm umgewandelt, welcher mein eigener Simplex Algorithmus verarbeiten kann oder mit Hilfe der Methode \texttt{convertLpSolve} in einen \texttt{LpSolve}.
-Bei beiden Formaten wird dies noch in \texttt{Wrapper} verpackt, da beide die Informationen, welcher Index welche Filmvorstellung abbildet, nicht enthalten.
+Bei beiden Formaten wird dies noch in \texttt{Wrapper} verpackt, da beide die Informationen, welche Indizes welche Filmvorstellungen abbilden, nicht enthalten.
 
 \subsubsection{Optimale Lösung bestimmen}
 
