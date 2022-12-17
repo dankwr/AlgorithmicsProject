@@ -1,0 +1,55 @@
+Start with  ..\bigData\NFL17_071_Spielfilme.csv
+..\bigData\NFL17_071_Spielfilme.csv: Execution time: 0.3 sec, result is OPTIMAL solution, value of the result is 127.09999999999998
+Start with  ..\bigData\NFL17_093_alle_Spielfilme_ohne_Filmforum.csv
+..\bigData\NFL17_093_alle_Spielfilme_ohne_Filmforum.csv: Execution time: 360.0 sec, result is SUB-OPTIMAL solution, value of the result is 160.70000000000002
+Start with  ..\bigData\NFL17_093_WE.csv
+..\bigData\NFL17_093_WE.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 93.39999999999998
+Start with  ..\bigData\NFL17_103_alle_Spielfilme.csv
+..\bigData\NFL17_103_alle_Spielfilme.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 156.60000000000002
+Start with  ..\bigData\NFL17_149_CS.csv
+..\bigData\NFL17_149_CS.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 169.9
+Start with  ..\bigData\NFL17_187_CS_KoKi_Col.csv
+..\bigData\NFL17_187_CS_KoKi_Col.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 185.70000000000002
+Start with  ..\bigData\NFL17_198.csv
+..\bigData\NFL17_198.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 193.9
+Start with  ..\bigData\NFL17_198_random_rating.csv
+..\bigData\NFL17_198_random_rating.csv: Execution time: 360.0 sec, result is SUB-OPTIMAL solution, value of the result is 169.79999999999998
+Start with  ..\bigData\NFL18_048_Fr.csv
+..\bigData\NFL18_048_Fr.csv: Execution time: 1.943 sec, result is OPTIMAL solution, value of the result is 50.89999999999999
+Start with  ..\bigData\NFL18_048_Mi.csv
+..\bigData\NFL18_048_Mi.csv: Execution time: 3.133 sec, result is OPTIMAL solution, value of the result is 48.89999999999999
+Start with  ..\bigData\NFL18_049_Sa.csv
+..\bigData\NFL18_049_Sa.csv: Execution time: 1.866 sec, result is OPTIMAL solution, value of the result is 56.09999999999998
+Start with  ..\bigData\NFL18_050_Dok.csv
+..\bigData\NFL18_050_Dok.csv: Execution time: 0.2 sec, result is OPTIMAL solution, value of the result is 159.00000000000003
+Start with  ..\bigData\NFL18_050_Kinder.csv
+..\bigData\NFL18_050_Kinder.csv: Execution time: 0.2 sec, result is OPTIMAL solution, value of the result is 119.0
+Start with  ..\bigData\NFL18_062_SE.csv
+..\bigData\NFL18_062_SE.csv: Execution time: 0.7 sec, result is OPTIMAL solution, value of the result is 184.40000000000003
+Start with  ..\bigData\NFL18_069_Wettbewerb.csv
+..\bigData\NFL18_069_Wettbewerb.csv: Execution time: 0.2 sec, result is OPTIMAL solution, value of the result is 126.49999999999999
+Start with  ..\bigData\NFL18_080_IMDb_ge_7_5.csv
+..\bigData\NFL18_080_IMDb_ge_7_5.csv: Execution time: 1.674 sec, result is OPTIMAL solution, value of the result is 223.69999999999993
+Start with  ..\bigData\NFL18_119_WE.csv
+..\bigData\NFL18_119_WE.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 120.39999999999999
+Start with  ..\bigData\NFL18_138_frei.csv
+..\bigData\NFL18_138_frei.csv: Execution time: 360.0 sec, result is SUB-OPTIMAL solution, value of the result is 124.89999999999998
+Start with  ..\bigData\NFL18_182_CS.csv
+..\bigData\NFL18_182_CS.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 190.49999999999994
+Start with  ..\bigData\NFL18_200_2018.csv
+..\bigData\NFL18_200_2018.csv: Execution time: 360.0 sec, result is SUB-OPTIMAL solution, value of the result is 241.19999999999993
+Start with  ..\bigData\NFL18_259.csv
+..\bigData\NFL18_259.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 221.4
+Start with  ..\bigData\NFL19_074_SE.csv
+..\bigData\NFL19_074_SE.csv: Execution time: 0.4 sec, result is OPTIMAL solution, value of the result is 182.2
+Start with  ..\bigData\NFL19_106_SF_FF.csv
+..\bigData\NFL19_106_SF_FF.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 212.19999999999996
+Start with  ..\bigData\NFL19_148_HP.csv
+..\bigData\NFL19_148_HP.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 241.49999999999997
+Start with  ..\bigData\NFL19_199_2019.csv
+..\bigData\NFL19_199_2019.csv: Execution time: 360.0 sec, result is SUB-OPTIMAL solution, value of the result is 285.50000000000006
+Start with  ..\bigData\NFL19_200_CS.csv
+..\bigData\NFL19_200_CS.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 246.29999999999993
+Start with  ..\bigData\NFL19_301.csv
+..\bigData\NFL19_301.csv: Execution time: 360.1 sec, result is SUB-OPTIMAL solution, value of the result is 293.0
+Done!

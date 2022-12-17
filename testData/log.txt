@@ -1,0 +1,27 @@
+Start with  ..\testData\NFL17_014_IMDb_ge_8.csv
+..\testData\NFL17_014_IMDb_ge_8.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 41.1
+Start with  ..\testData\NFL17_017_Retrospektive.csv
+..\testData\NFL17_017_Retrospektive.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 97.49999999999999
+Start with  ..\testData\NFL17_021_Mi.csv
+..\testData\NFL17_021_Mi.csv: Execution time: 0.7 sec, result is OPTIMAL solution, value of the result is 30.099999999999994
+Start with  ..\testData\NFL17_024_Kinder.csv
+..\testData\NFL17_024_Kinder.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 89.9
+Start with  ..\testData\NFL17_029_SE_Vuxna.csv
+..\testData\NFL17_029_SE_Vuxna.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 93.5
+Start with  ..\testData\NFL18_014_IMDb_ge_8_5.csv
+..\testData\NFL18_014_IMDb_ge_8_5.csv: Execution time: 0.0 sec, result is OPTIMAL solution, value of the result is 44.199999999999996
+Start with  ..\testData\NFL18_015_kurz.csv
+..\testData\NFL18_015_kurz.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 72.1
+Start with  ..\testData\NFL18_015_kurz_rnd_rate.csv
+..\testData\NFL18_015_kurz_rnd_rate.csv: Execution time: 0.2 sec, result is OPTIMAL solution, value of the result is 74.0
+Start with  ..\testData\NFL18_023_Di.csv
+..\testData\NFL18_023_Di.csv: Execution time: 0.6 sec, result is OPTIMAL solution, value of the result is 37.8
+Start with  ..\testData\NFL18_023_Di_Nacht.csv
+..\testData\NFL18_023_Di_Nacht.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 10007.699999999999
+Start with  ..\testData\NFL18_027_IMDb_ge_8.csv
+..\testData\NFL18_027_IMDb_ge_8.csv: Execution time: 0.0 sec, result is OPTIMAL solution, value of the result is 85.1
+Start with  ..\testData\NFL19_012_Kurz.csv
+..\testData\NFL19_012_Kurz.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 75.3
+Start with  ..\testData\NFL19_029_KoKi.csv
+..\testData\NFL19_029_KoKi.csv: Execution time: 0.2 sec, result is OPTIMAL solution, value of the result is 155.9
+Done!

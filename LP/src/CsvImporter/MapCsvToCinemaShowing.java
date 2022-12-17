@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,7 @@ import CinemaShowing.Weekday;
 public class MapCsvToCinemaShowing {
 
 	public static List<CinemaShowing> convertCsvFile(String pFilePath) throws FileNotFoundException, IOException {
-		try (FileReader fileReader = new FileReader(pFilePath); BufferedReader br = new BufferedReader(fileReader)) {
+		try (FileReader fileReader = new FileReader(pFilePath, StandardCharsets.UTF_8); BufferedReader br = new BufferedReader(fileReader)) {
 			return br.lines().map(MapCsvToCinemaShowing::mapLineToCinemaShowing).collect(Collectors.toList());
 		}
 	}

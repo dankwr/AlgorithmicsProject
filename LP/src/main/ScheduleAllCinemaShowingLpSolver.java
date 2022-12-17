@@ -15,10 +15,7 @@ import CinemaShowing.CinemaShowing;
 import CinemaShowing.MapCinemaShowingsToLinearProgram;
 import CinemaShowing.MapCinemaShowingsToLinearProgram.Wrapper;
 import CsvImporter.MapCsvToCinemaShowing;
-import SimplexAlgorithm.LinearProgrammResult;
-import lpsolve.LogListener;
 import lpsolve.LpSolve;
-import lpsolve.LpSolveException;
 
 public class ScheduleAllCinemaShowingLpSolver {
 
@@ -41,15 +38,19 @@ public class ScheduleAllCinemaShowingLpSolver {
 				System.out.println("Start with  " + filepath);
 				List<CinemaShowing> cinemaShowings = MapCsvToCinemaShowing.convertCsvFile(filepath);
 				Wrapper<LpSolve> linearProgram = MapCinemaShowingsToLinearProgram.convertLpSolve(cinemaShowings);
-				linearProgram.getSolver().setOutputfile(""); 
+				LpSolve lpSolve = linearProgram.getSolver();
+				lpSolve.setOutputfile(""); 
 				
 				Instant start = Instant.now();
-				linearProgram.getSolver().solve();
+				lpSolve.solve();
 				Instant end = Instant.now();
+				
 				Duration interval = Duration.between(start, end); 
+				String statustext = lpSolve.getStatustext(lpSolve.getStatus());
+				
 				System.out.println(filepath + ": Execution time: " + interval.getSeconds() + "."
-						+ interval.getNano() / 1000000 + " sec, result is " + linearProgram.getSolver().getStatustext(linearProgram.getSolver().getStatus()));
-				linearProgram.getSolver().deleteLp();
+						+ interval.getNano() / 1000000 + " sec, result is " + statustext + ", value of the result is " + lpSolve.getObjective());
+				lpSolve.deleteLp();
 			} catch (Exception e) {
 				System.out.println(filepath);
 				e.printStackTrace();

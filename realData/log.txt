@@ -1,0 +1,25 @@
+Start with  ..\realData\NFL17_036_SE.csv
+..\realData\NFL17_036_SE.csv: Execution time: 0.2 sec, result is OPTIMAL solution, value of the result is 128.29999999999998
+Start with  ..\realData\NFL17_041_Do.csv
+..\realData\NFL17_041_Do.csv: Execution time: 0.951 sec, result is OPTIMAL solution, value of the result is 41.099999999999994
+Start with  ..\realData\NFL17_042.csv
+..\realData\NFL17_042.csv: Execution time: 0.5 sec, result is OPTIMAL solution, value of the result is 112.59999999999998
+Start with  ..\realData\NFL17_042_So.csv
+..\realData\NFL17_042_So.csv: Execution time: 0.404 sec, result is OPTIMAL solution, value of the result is 47.69999999999999
+Start with  ..\realData\NFL17_043_Fr.csv
+..\realData\NFL17_043_Fr.csv: Execution time: 0.768 sec, result is OPTIMAL solution, value of the result is 55.0
+Start with  ..\realData\NFL17_051_gute_IMDb_Spielfilme.csv
+..\realData\NFL17_051_gute_IMDb_Spielfilme.csv: Execution time: 0.3 sec, result is OPTIMAL solution, value of the result is 96.89999999999999
+Start with  ..\realData\NFL17_051_Sa.csv
+..\realData\NFL17_051_Sa.csv: Execution time: 1.895 sec, result is OPTIMAL solution, value of the result is 52.699999999999996
+Start with  ..\realData\NFL17_064_WE_CS.csv
+..\realData\NFL17_064_WE_CS.csv: Execution time: 317.587 sec, result is OPTIMAL solution, value of the result is 79.89999999999998
+Start with  ..\realData\NFL18_039_So.csv
+..\realData\NFL18_039_So.csv: Execution time: 0.272 sec, result is OPTIMAL solution, value of the result is 45.3
+Start with  ..\realData\NFL18_047_Do.csv
+..\realData\NFL18_047_Do.csv: Execution time: 1.634 sec, result is OPTIMAL solution, value of the result is 49.69999999999999
+Start with  ..\realData\NFL19_033_Premiere.csv
+..\realData\NFL19_033_Premiere.csv: Execution time: 0.1 sec, result is OPTIMAL solution, value of the result is 101.6
+Start with  ..\realData\NFL19_035_startSE.csv
+..\realData\NFL19_035_startSE.csv: Execution time: 0.2 sec, result is OPTIMAL solution, value of the result is 91.09999999999998
+Done!
